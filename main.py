@@ -7,7 +7,6 @@ from fastapi.templating import Jinja2Templates
 from auth_error import AuthError
 from sign import Sign
 
-
 KEY = os.environ['KEY']
 SALT = os.environ['SALT']
 
@@ -17,13 +16,13 @@ sign = Sign(key=KEY)
 auth = AuthError()
 
 users = {
-    'Alex@user.com': {
-        'name': 'Alex',
+    'test@user.com': {
+        'name': 'Alex Doe',
         'password': 'Password',
         'balance': 100_000
     },
-    'Petr@user.com': {
-        'name': 'Petr',
+    'testik@user.com': {
+        'name': 'John Doe',
         'password': 'pass123',
         'balance': 200_000
     }
