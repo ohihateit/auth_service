@@ -4,13 +4,15 @@ import base64
 from typing import Optional
 from fastapi import FastAPI, Request, Response, Form, Cookie
 from fastapi.templating import Jinja2Templates
-
 from auth_error import AuthError
 from sign import Sign
 
+
+KEY = os.environ['KEY']
+SALT = os.environ['SALT']
+
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
-KEY = os.environ['KEY']
 sign = Sign(key=KEY)
 auth = AuthError()
 
