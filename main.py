@@ -20,20 +20,17 @@ auth = AuthError()
 @app.get("/")
 async def index(request: Request, username: Optional[str] = Cookie(default=None)):
     if not username:
-        redirect = auth.redirect_to_auth_form(context={"request": request})
-        return redirect
+        return auth.redirect_to_auth_form(context={"request": request})
 
     valid_username = sign.get_username_from_signed_cookie(username)
 
     if not valid_username:
-        redirect = auth.redirect_to_auth_form(context={"request": request})
-        return redirect
+        return auth.redirect_to_auth_form(context={"request": request})
 
     try:
         user = users[valid_username]
     except KeyError:
-        redirect = auth.redirect_to_auth_form(context={"request": request})
-        return redirect
+        return auth.redirect_to_auth_form(context={"request": request})
 
     return Response(f"Hello, {users[valid_username]['name']}")
 
