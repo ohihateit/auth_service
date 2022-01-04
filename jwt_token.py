@@ -1,28 +1,30 @@
-from typing import Optional
-from datetime import datetime, time, timedelta
-from jose import JWTError, jwt
-from os import access, environ
-from pydantic import BaseModel
+import jwt
+import time
 
-from main import token
+from os import environ
+
+JWT_SECRET = environ['KEY']
+JWT_ALGORITHM = "HS256"
 
 
 class JWTToken:
-    def create_access_token(self, data: dict, expires_delta: Optional[timedelta] = None):
-        to_encode = data.copy()
+    def token_response(self, token: str):
+        return {"access_token": token}
 
-        if expires_delta:
-            expire = datetime.utcnow() + expires_delta
-        else:
-            expire = datetime.utcnow() + timedelta(minutes=15)
+    def sign_JWT(self, user_id):
+        payload = {
+            "user_id": user_id,
+            "expires": time.time() + 600
+        }
 
-        to_encode.update({"exp": expire})
+        token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
 
-        encoded_jwt = jwt.encode(to_encode, environ['SALT'], algorith="HS256")
+        return token
 
-        return encoded_jwt
-
-
-class Token(BaseModel):
-    access_token: str
-    token_type: str
+    def decode_JWT(self, token: str):
+        try:
+            decoded_token = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+            
+            return decoded_token if decoded_token["expires"] >= time.time() else None
+        except:
+            return {}
