@@ -1,7 +1,7 @@
 import base64
 import os
 from typing import Optional
-
+from jwt_token import Token
 from fastapi import Cookie, FastAPI, Form, Request, Response
 from fastapi.templating import Jinja2Templates
 from auth_error import AuthError

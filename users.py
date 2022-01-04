@@ -1,12 +1,12 @@
 users = {
     'test@user.com': {
         'name': 'Alex Doe',
-        'password': '2bb9a0606d7b1f678e0657edb785898f0c4c048afc1bbbca9912ab4006806692',
+        'password': 'bba55596c81c6ed60ee9501b09188a1474e68f981feb2c4cb1f7c278fd6f92ed',
         'balance': 100_000
     },
     'testik@user.com': {
         'name': 'John Doe',
-        'password': '8e16748b212e2ec3a35359207c7ba72325e9cbf83959ef8b5ef83da432bbc2e6',
+        'password': '56f2ea7f613b2a987d11026b2fbe923b69944282acb13420fc693181d04c063b',
         'balance': 200_000
     }
 }
