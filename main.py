@@ -1,8 +1,8 @@
 import base64
 import os
 from typing import Optional
-
-from fastapi import Cookie, FastAPI, Form, Request, Response
+from jwt_token import JWTToken
+from fastapi import Cookie, FastAPI, Form, Request, Response, responses
 from fastapi.templating import Jinja2Templates
 from auth_error import AuthError
 from hash_pass import HashPass
@@ -49,3 +49,20 @@ async def login(login: str = Form(...), password: str = Form(...)):
     response.set_cookie(key="username", value=signed_login)
 
     return response
+
+
+@app.post("/token_login")
+async def login_with_token(login: str = Form(...), password: str = Form(...)):
+    user = users.get(login)
+    hash_pass = HashPass()
+    jwt_token = JWTToken()
+
+    if not user or not hash_pass.verify_password(login, password):  # If the user not exist or hash doesn't match
+        return Response("Get out of here")
+    
+    response = Response(f"Hello, {user['name']}!<br />Balance: {user['balance']}", media_type='text/html')
+
+    response.set_cookie(key="token", value=jwt_token.sign_JWT(login))
+
+    return response
+    
