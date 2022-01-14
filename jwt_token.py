@@ -8,10 +8,8 @@ JWT_ALGORITHM = "HS256"
 
 
 class JWTToken:
-    def token_response(self, token: str):
-        return {"access_token": token}
-
-    def sign_JWT(self, user_id):
+    @staticmethod
+    def sign_JWT(user_id):
         payload = {
             "user_id": user_id,
             "expires": time.time() + 600
@@ -21,10 +19,11 @@ class JWTToken:
 
         return token
 
-    def decode_JWT(self, token: str):
+    @staticmethod
+    def decode_JWT(token: str):
         try:
             decoded_token = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
-            
+
             return decoded_token if decoded_token["expires"] >= time.time() else None
         except:
             return {}

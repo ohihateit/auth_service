@@ -35,7 +35,7 @@ async def index(request: Request, username: Optional[str] = Cookie(default=None)
     return Response(f"Hello, {users[valid_username]['name']}")
 
 
-@app.post("/login")
+@app.post("/login", deprecated=True)
 async def login(login: str = Form(...), password: str = Form(...)):
     user = users.get(login)
     hash_pass = HashPass()
@@ -55,14 +55,12 @@ async def login(login: str = Form(...), password: str = Form(...)):
 async def login_with_token(login: str = Form(...), password: str = Form(...)):
     user = users.get(login)
     hash_pass = HashPass()
-    jwt_token = JWTToken()
-
     if not user or not hash_pass.verify_password(login, password):  # If the user not exist or hash doesn't match
         return Response("Get out of here")
     
     response = Response(f"Hello, {user['name']}!<br />Balance: {user['balance']}", media_type='text/html')
 
-    response.set_cookie(key="token", value=jwt_token.sign_JWT(login))
+    response.set_cookie(key="token", value=JWTToken.sign_JWT(login))
 
     return response
     
