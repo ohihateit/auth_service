@@ -1,7 +1,7 @@
 users = {
     'test@user.com': {
         'name': 'Alex Doe',
-        'password': '058cfab2ed26a775801c67bd3a0d6e1b355d4673b06ee411934a124f6d7ef546',
+        'password': '0060f8d8502f90f064eb163d4d7331dc44bcc559c4a33d5aa4f6b6f6c07eaf72',
         'balance': 100_000
     },
     'testik@user.com': {
